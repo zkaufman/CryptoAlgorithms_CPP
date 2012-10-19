@@ -21,8 +21,8 @@ public:
 int MI(int base, int mod) {
   int remainder = 0;
 
-  for(int b = 0; b < 100 ; b++) {
-    for (int a = 0; a < 100; a++) {
+  for(int b = 0; b < 16000 ; b++) {
+    for (int a = 0; a < 16000; a++) {
       remainder = (base * a) - (mod * b);
       if (remainder == 1)
         return a;
@@ -162,8 +162,8 @@ int main(int argc, char *argv[]) {
   cout << "Running in C++" << endl;
 
   // Test Multiplicative Inverse.
-  int base = 200;
-  int mod = 313;
+  int base = 3;
+  int mod = 12091;
   cout << "Muyltiplicative Inverse for " << base << " mod " << mod << " = " << MI(base, mod) << endl;
 
   // Test Greatest Common Denominator code.
@@ -180,7 +180,7 @@ int main(int argc, char *argv[]) {
   cout << base << "^" << e << " % " << m << " = " << val << endl;
 
   // Test Z_n code.
-  int n = 14;
+  int n = 26;
   vector<int> Z = Z_n(n);
   cout << "Z_" << n << " = { ";
   for ( int i = 0 ; i < Z.size() ; i++ )
