@@ -5,12 +5,54 @@ using namespace std;
 
 class Algorithms {
 public:
+  static int* EEA(int, int);
   static int MI(int, int);
   static int GDC(int, int);
   static int FEA(int, int, int);
   static std::vector<int> Z(int);
   static std::vector<int> primitiveInts(int);
 };
+
+// Extended Euclidean Algorithm.
+// Find rhe multipolicative inverse of x
+// such that : ax = by + 1. Another way
+// to think of it is x mod m = 1.
+// Returns a and b.
+// Example:
+//   EEA(200,313) is: 36 because
+//   36*200 = (23)*313 + 1
+int* EEA(int x, int y) {
+  int* returnVal = new int[2];
+  int tmp_x = x;
+  int tmp_y = y;
+  int tmp_a = 1;
+  int tmp_b = 0;
+  int tmp_c = 0;
+  int tmp_d = 1;
+  int tmp_e = 0;
+  int remainder = x % y;
+  int quotient = x / y ;
+
+  do {
+    remainder = tmp_x % tmp_y;
+    quotient = tmp_x / tmp_y ;
+
+    tmp_x = tmp_y;
+    tmp_y = remainder;
+
+    tmp_e = tmp_c;
+    tmp_c = tmp_a - quotient * tmp_c;
+    tmp_a = tmp_e;
+    tmp_e = tmp_d;
+    tmp_d = tmp_b - quotient * tmp_d;
+    tmp_b = tmp_e;
+  } while (remainder > 0);
+
+  returnVal[0] = tmp_a;
+  returnVal[1] = tmp_b;
+
+  return returnVal;
+}
 
 // Multipilicative Inverse (brute force).
 // Returns the mulitplicitive inverse of x
@@ -161,10 +203,16 @@ int BSGS(int logbase, int x, int mod) {
 int main(int argc, char *argv[]) {
   cout << "Running in C++" << endl;
 
+  // Test Extended Euclidean Algorithm.
+  int base = 200;
+  int mod = 313;
+  int* vals = EEA(200, 313);
+  cout << "(" << vals[0] << ") * " << base << " + (" << vals[1] << ") * " << mod << " = 1" << endl;
+
   // Test Multiplicative Inverse.
-  int base = 3;
-  int mod = 12091;
-  cout << "Muyltiplicative Inverse for " << base << " mod " << mod << " = " << MI(base, mod) << endl;
+  base = 200;
+  mod = 313;
+  cout << "Multiplicative Inverse for " << base << " mod " << mod << " = " << MI(base, mod) << endl;
 
   // Test Greatest Common Denominator code.
   int x = 899;
